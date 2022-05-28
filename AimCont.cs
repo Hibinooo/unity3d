@@ -16,6 +16,9 @@ public class AimCont : MonoBehaviour
     public Transform PosTarget;
     public float turnSpeed;
     public LayerMask mask;
+
+    public GameObject Weanpon;  
+
     private void Start()
     {
         anim = GetComponentInChildren<Animator>();
@@ -26,7 +29,9 @@ public class AimCont : MonoBehaviour
         
         if (Input.GetButton("Fire2"))
         {
+
             anim.SetBool("Aim", true);
+            Weanpon.SetActive(true);
             Vector3 dir = PosTarget.position - transform.position;
             dir.y = 0;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), turnSpeed * Time.deltaTime);
@@ -37,6 +42,7 @@ public class AimCont : MonoBehaviour
         else
         {
             anim.SetBool("Aim", false);
+            Weanpon.SetActive(false);
         }
 
         if (Input.GetButton("Fire1"))
@@ -46,7 +52,6 @@ public class AimCont : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), turnSpeed * Time.deltaTime);
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
             PosTarget.position = ray.GetPoint(15);
-
         }
         
 
@@ -60,7 +65,7 @@ public class AimCont : MonoBehaviour
         {
             if (hit.collider.tag == "Respawn")
             {
-                Debug.Log("попал" + hit.collider);
+                Debug.Log("РїРѕРїР°Р»" + hit.collider);
                 if (hit.rigidbody != null)
                 {
                     hit.rigidbody.AddForce(-hit.normal * forse);
